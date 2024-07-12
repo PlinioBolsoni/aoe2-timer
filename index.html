@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AoE2 Estratégia com Cronômetro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    #timer {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+    #orders {
+      list-style: none;
+      padding: 0;
+    }
+    .order {
+      display: none;
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AoE2 Estratégia com Cronômetro</h1>
+  <div id="timer">00:00</div>
+  <ul id="orders">
+    <li class="order" data-time="10">Construir 2 Casas</li>
+    <li class="order" data-time="20">Enviar 6 Aldeões para Coletar Comida</li>
+    <li class="order" data-time="40">Construir um Campo de Lenhador</li>
+    <li class="order" data-time="60">Construir um Moinho</li>
+    <li class="order" data-time="80">Avançar para a Idade Feudal</li>
+  </ul>
+
+  <script>
+    let timer = 0;
+    const timerElement = document.getElementById('timer');
+    const orders = document.querySelectorAll('.order');
+
+    function startTimer() {
+      setInterval(() => {
+        timer++;
+        updateTimerDisplay();
+        checkOrders();
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timer / 60).toString().padStart(2, '0');
+      const seconds = (timer % 60).toString().padStart(2, '0');
+      timerElement.textContent = `${minutes}:${seconds}`;
+    }
+
+    function checkOrders() {
+      orders.forEach(order => {
+        const orderTime = parseInt(order.getAttribute('data-time'));
+        if (timer === orderTime) {
+          order.style.display = 'block';
+        }
+      });
+    }
+
+    startTimer();
+  </script>
+</body>
+</html>
